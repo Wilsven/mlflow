@@ -3,6 +3,10 @@ from mlflow_project.pipeline.data_ingestion_pipeline import (
     STAGE_NAME_01,
     DataIngestionPipeline,
 )
+from mlflow_project.pipeline.data_transformation_pipeline import (
+    STAGE_NAME_03,
+    DataTransformationPipeline,
+)
 from mlflow_project.pipeline.data_validation_pipeline import (
     STAGE_NAME_02,
     DataValidationPipeline,
@@ -20,6 +24,13 @@ try:
     data_validation_pipeline = DataValidationPipeline()
     data_validation_pipeline.forward()
     logger.info(f"{STAGE_NAME_02} has completed")
+
+    # Data Transformation Pipeline
+    logger.info(f"{STAGE_NAME_03} has started")
+    data_transformation_pipeline = DataTransformationPipeline()
+    data_transformation_pipeline.forward()
+    logger.info(f"{STAGE_NAME_03} has completed")
+
 except Exception as e:
     logger.exception(e)
     raise e

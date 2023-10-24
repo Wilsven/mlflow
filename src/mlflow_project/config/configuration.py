@@ -1,6 +1,10 @@
+import os
+
+from mlflow_project import logger
 from mlflow_project.constants import *
 from mlflow_project.entity.config_entity import (
     DataIngestionConfig,
+    DataTransformationConfig,
     DataValidationConfig,
 )
 from mlflow_project.utils.common import create_directories, read_yaml
@@ -31,6 +35,14 @@ class ConfigurationManager:
 
         create_directories([data_ingestion.root_dir])
 
+        file_path = os.path.join(data_ingestion.root_dir, ".gitkeep")
+        if not os.path.exists(file_path):
+            with open(file_path, "w") as f:
+                logger.info(
+                    f"Creating file: .gitkeep in directory {data_ingestion.root_dir}"
+                )
+                pass
+
         data_ingestion_config = DataIngestionConfig(
             root_dir=Path(data_ingestion.root_dir),
             source_url=str(data_ingestion.source_url),
@@ -53,6 +65,14 @@ class ConfigurationManager:
 
         create_directories([data_validation.root_dir])
 
+        file_path = os.path.join(data_validation.root_dir, ".gitkeep")
+        if not os.path.exists(file_path):
+            with open(file_path, "w") as f:
+                logger.info(
+                    f"Creating file: .gitkeep in directory {data_validation.root_dir}"
+                )
+                pass
+
         data_validation_config = DataValidationConfig(
             root_dir=Path(data_validation.root_dir),
             unzip_data_path=Path(data_validation.unzip_data_path),
@@ -61,3 +81,30 @@ class ConfigurationManager:
         )
 
         return data_validation_config
+
+    def get_data_transformation_config(self) -> DataTransformationConfig:
+        """
+        Creates the root directory and returns
+        the configuration for data transformation.
+
+        Returns:
+            DataTransformationConfig: Configuration for data transformation.
+        """
+        data_transformation = self.config.data_transformation
+
+        create_directories([data_transformation.root_dir])
+
+        file_path = os.path.join(data_transformation.root_dir, ".gitkeep")
+        if not os.path.exists(file_path):
+            with open(file_path, "w") as f:
+                logger.info(
+                    f"Creating file: .gitkeep in directory {data_transformation.root_dir}"
+                )
+                pass
+
+        data_transformation_config = DataTransformationConfig(
+            root_dir=Path(data_transformation.root_dir),
+            unzip_data_path=Path(data_transformation.unzip_data_path),
+        )
+
+        return data_transformation_config
