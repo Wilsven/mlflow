@@ -23,3 +23,15 @@ class DataTransformationConfig:
     root_dir: Path
     unzip_data_path: Path
     status_file_path: Path
+
+
+@dataclass(frozen=True)
+class ModelTrainerConfig:
+    root_dir: Path
+    train_data_path: Path
+    test_data_path: Path
+    model_name: str
+    alpha: float
+    l1_ratio: float
+    random_state: int
+    target_column: str

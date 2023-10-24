@@ -2,6 +2,7 @@
 *.zip
 *.csv
 *.txt
+*.joblib
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

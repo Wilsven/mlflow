@@ -6,6 +6,7 @@ from mlflow_project.entity.config_entity import (
     DataIngestionConfig,
     DataTransformationConfig,
     DataValidationConfig,
+    ModelTrainerConfig,
 )
 from mlflow_project.utils.common import create_directories, read_yaml
 
@@ -109,3 +110,37 @@ class ConfigurationManager:
         )
 
         return data_transformation_config
+
+    def get_model_trainer_config(self) -> ModelTrainerConfig:
+        """
+        Creates the root directory and returns
+        the configuration for model trainer.
+
+        Returns:
+            ModelTrainerConfig: Configuration for model trainer.
+        """
+        model_trainer = self.config.model_trainer
+        target = self.schema.target
+
+        create_directories([model_trainer.root_dir])
+
+        file_path = os.path.join(model_trainer.root_dir, ".gitkeep")
+        if not os.path.exists(file_path):
+            with open(file_path, "w") as f:
+                logger.info(
+                    f"Creating file: .gitkeep in directory {model_trainer.root_dir}"
+                )
+                pass
+
+        model_trainer_config = ModelTrainerConfig(
+            root_dir=Path(model_trainer.root_dir),
+            train_data_path=Path(model_trainer.train_data_path),
+            test_data_path=Path(model_trainer.test_data_path),
+            model_name=str(model_trainer.model_name),
+            alpha=float(self.params.ALPHA),
+            l1_ratio=float(self.params.L1_RATIO),
+            random_state=int(self.params.RANDOM_STATE),
+            target_column=str(target.name),
+        )
+
+        return model_trainer_config
