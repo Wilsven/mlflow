@@ -105,6 +105,7 @@ class ConfigurationManager:
         data_transformation_config = DataTransformationConfig(
             root_dir=Path(data_transformation.root_dir),
             unzip_data_path=Path(data_transformation.unzip_data_path),
+            status_file_path=Path(data_transformation.status_file_path),
         )
 
         return data_transformation_config

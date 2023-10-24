@@ -14,3 +14,4 @@ data_validation:
 data_transformation:
   root_dir: artifacts/data_transformation
   unzip_data_path: artifacts/data_ingestion/winequality-red.csv
+  status_file_path: artifacts/data_validation/status.txt

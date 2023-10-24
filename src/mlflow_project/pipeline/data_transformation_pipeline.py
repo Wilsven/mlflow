@@ -10,11 +10,21 @@ class DataTransformationPipeline:
         pass
 
     def forward(self):
-        """Runs the data transformation pipeline."""
+        """Runs the data transformation pipeline if and only if the validation status is True."""
         config_manager = ConfigurationManager()
         data_transformation_config = config_manager.get_data_transformation_config()
-        data_transformation = DataTransformation(config=data_transformation_config)
-        data_transformation.train_test_split()
+        # Checks if validation status is True if not don't run the transformation pipeline
+        with open(data_transformation_config.status_file_path, "r") as f:
+            status = (f.read().split(" ")[-1]) == "True"
+
+        if status:
+            logger.info(
+                "Schema validation is successful. Proceeding with transformation pipeline"
+            )
+            data_transformation = DataTransformation(config=data_transformation_config)
+            data_transformation.train_test_split()
+        else:
+            raise Exception("Data schema invalid. Transformation pipeline terminated")
 
 
 if __name__ == "__main__":
