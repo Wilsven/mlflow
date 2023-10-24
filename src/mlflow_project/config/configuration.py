@@ -1,5 +1,8 @@
 from mlflow_project.constants import *
-from mlflow_project.entity.config_entity import DataIngestionConfig
+from mlflow_project.entity.config_entity import (
+    DataIngestionConfig,
+    DataValidationConfig,
+)
 from mlflow_project.utils.common import create_directories, read_yaml
 
 
@@ -36,3 +39,25 @@ class ConfigurationManager:
         )
 
         return data_ingestion_config
+
+    def get_data_validation_config(self) -> DataValidationConfig:
+        """
+        Creates the root directory and returns
+        the configuration for data validation.
+
+        Returns:
+            DataValidationConfig: Configuration for data validation.
+        """
+        data_validation = self.config.data_validation
+        schema = self.schema.columns
+
+        create_directories([data_validation.root_dir])
+
+        data_validation_config = DataValidationConfig(
+            root_dir=Path(data_validation.root_dir),
+            unzip_data_path=Path(data_validation.unzip_data_path),
+            status_file_path=Path(data_validation.status_file_path),
+            data_schema=dict(schema),
+        )
+
+        return data_validation_config
