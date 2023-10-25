@@ -90,7 +90,7 @@ Edit the `.env.example` file and rename it to `env` when done.
     2. ECR: Elastic Container registry to save your docker image in AWS
 
 
-    # Description: About the deployment
+    # Description
 
     1. Build docker image of the source code
 
@@ -114,7 +114,7 @@ Edit the `.env.example` file and rename it to `env` when done.
 
 ## 4. Create EC2 Machine (Ubuntu)
 
-## 5. Open EC2 and Install Docker in EC2 Machine:
+## 5. Open EC2 and Install Docker in EC2 Machine
 
     # Optional
 
@@ -136,7 +136,7 @@ Edit the `.env.example` file and rename it to `env` when done.
 
     Settings > Actions > Runner > New self-hosted runner > Select Linux > Execute commands one by one in your Virtual Machine
 
-## 7. Setup GitHub Secrets:
+## 7. Setup GitHub Secrets
 
     AWS_ACCESS_KEY_ID
 
