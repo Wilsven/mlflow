@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from typing import Union
 from urllib.parse import urlparse
@@ -57,9 +58,13 @@ class ModelEvaluation:
             # Evaluate metrics
             rmse, mae, r2 = self.eval_metrics(test_y, pred_y)
 
+            # Check if metrics.json exists, delete it
+            if os.path.exists(self.config.metrics_file_path):
+                os.remove(self.config.metrics_file_path)
+
             # Saving metrics locally
             scores = {"rmse": rmse, "mae": mae, "r2": r2}
-            save_json(path=Path(self.config.metrics_file_path), data=scores)
+            save_json(path=self.config.metrics_file_path, data=scores)
 
             params = {
                 "alpha": self.config.alpha,
