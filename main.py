@@ -11,6 +11,10 @@ from mlflow_project.pipeline.data_validation_pipeline import (
     STAGE_NAME_02,
     DataValidationPipeline,
 )
+from mlflow_project.pipeline.model_evaluation_pipeline import (
+    STAGE_NAME_05,
+    ModelEvaluationPipeline,
+)
 from mlflow_project.pipeline.model_trainer_pipeline import (
     STAGE_NAME_04,
     ModelTrainerPipeline,
@@ -40,6 +44,12 @@ try:
     model_trainer_pipeline = ModelTrainerPipeline()
     model_trainer_pipeline.forward()
     logger.info(f"{STAGE_NAME_04} has completed")
+
+    # Model Evaluation Pipeline
+    logger.info(f"{STAGE_NAME_05} has started")
+    model_evaluation_pipeline = ModelEvaluationPipeline()
+    model_evaluation_pipeline.forward()
+    logger.info(f"{STAGE_NAME_05} has completed")
 
 except Exception as e:
     logger.exception(e)

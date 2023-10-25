@@ -1,14 +1,23 @@
 import os
 
+from dotenv import load_dotenv
+
 from mlflow_project import logger
 from mlflow_project.constants import *
 from mlflow_project.entity.config_entity import (
     DataIngestionConfig,
     DataTransformationConfig,
     DataValidationConfig,
+    ModelEvaluationConfig,
     ModelTrainerConfig,
 )
 from mlflow_project.utils.common import create_directories, read_yaml
+
+load_dotenv()
+
+MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI")
+MLFLOW_TRACKING_USERNAME = os.getenv("MLFLOW_TRACKING_USERNAME")
+MLFLOW_TRACKING_PASSWORD = os.getenv("MLFLOW_TRACKING_PASSWORD")
 
 
 class ConfigurationManager:
@@ -144,3 +153,38 @@ class ConfigurationManager:
         )
 
         return model_trainer_config
+
+    def get_model_evaluation_config(self) -> ModelEvaluationConfig:
+        """
+        Creates the root directory and returns
+        the configuration for model evaluation.
+
+        Returns:
+            ModelEvaluationConfig: Configuration for model evaluation.
+        """
+        model_evaluation = self.config.model_evaluation
+        target = self.schema.target
+
+        create_directories([model_evaluation.root_dir])
+
+        file_path = os.path.join(model_evaluation.root_dir, ".gitkeep")
+        if not os.path.exists(file_path):
+            with open(file_path, "w") as f:
+                logger.info(
+                    f"Creating file: .gitkeep in directory {model_evaluation.root_dir}"
+                )
+                pass
+
+        model_evaluation_config = ModelEvaluationConfig(
+            root_dir=Path(model_evaluation.root_dir),
+            test_data_path=Path(model_evaluation.test_data_path),
+            model_path=Path(model_evaluation.model_path),
+            metrics_file_path=Path(model_evaluation.metrics_file_path),
+            alpha=float(self.params.ALPHA),
+            l1_ratio=float(self.params.L1_RATIO),
+            random_state=int(self.params.RANDOM_STATE),
+            target_column=str(target.name),
+            mlflow_uri=str(MLFLOW_TRACKING_URI),
+        )
+
+        return model_evaluation_config
