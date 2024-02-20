@@ -49,8 +49,8 @@ python app.py
 # 🐶 [Dagshub](https://dagshub.com/)
 
 ```
-MLFLOW_TRACKING_URI=https://dagshub.com/Wilsven/mlops-with-mlflow.mlflow \
-MLFLOW_TRACKING_USERNAME=Wilsven \
+MLFLOW_TRACKING_URI=https://dagshub.com/your_username/your_project_name.mlflow \
+MLFLOW_TRACKING_USERNAME=your_username \
 MLFLOW_TRACKING_PASSWORD=your_token \
 python script.py
 ```
@@ -58,9 +58,9 @@ python script.py
 Run the following commands to export as environment variables:
 
 ```bash
-export MLFLOW_TRACKING_URI=https://dagshub.com/Wilsven/mlops-with-mlflow.mlflow
+export MLFLOW_TRACKING_URI=https://dagshub.com/your_username/your_project_name.mlflow
 
-export MLFLOW_TRACKING_USERNAME=Wilsven
+export MLFLOW_TRACKING_USERNAME=your_username
 
 export MLFLOW_TRACKING_PASSWORD=your_token
 ```
@@ -68,8 +68,8 @@ export MLFLOW_TRACKING_PASSWORD=your_token
 Or you can create an `.env` file in the root directory:
 
 ```env
-MLFLOW_TRACKING_URI=https://dagshub.com/Wilsven/mlops-with-mlflow.mlflow
-MLFLOW_TRACKING_USERNAME=Wilsven
+MLFLOW_TRACKING_URI=https://dagshub.com/your_username/your_project_name.mlflow
+MLFLOW_TRACKING_USERNAME=your_username
 MLFLOW_TRACKING_PASSWORD=your_token
 ```
 
